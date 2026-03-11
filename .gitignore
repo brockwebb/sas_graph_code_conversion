@@ -125,5 +125,12 @@ dmypy.json
 tmp/*
 !tmp/.gitkeep
 
-# Claude Code session files
-.claude/
+# Working directories (gitignored, local only)
+cc_tasks/
+handoffs/
+output/
+
+# Claude Code session files (but NOT skills)
+.claude/*
+!.claude/skills
+!.claude/skills/**
