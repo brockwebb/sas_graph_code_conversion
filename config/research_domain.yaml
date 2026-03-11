@@ -1,0 +1,75 @@
+# SAS Graph Code Conversion — Domain Configuration
+# Seldon-compatible domain config (NFR-004)
+# Maps to Seldon artifact types and relationship types per reference_graph_schema.md Section 5.
+
+name: sas_graph_code_conversion
+description: >
+  Domain configuration for SAS statistical pipeline → Python/R conversion
+  via graph-based intermediate representation.
+
+node_types:
+  - Variable
+  - Dataset
+  - Transform
+  - Macro
+  - MacroInvocation
+  - Proc
+  - DataStep
+  - Pipeline
+
+edge_types:
+  - derived_from       # Variable → Variable: B is computed from A
+  - contains           # Dataset → Variable: dataset includes this variable
+  - produces           # Transform → Variable: transform creates/modifies this variable
+  - consumes           # Transform → Variable: transform reads this variable
+  - outputs            # DataStep/Proc → Dataset: step produces this dataset
+  - inputs             # DataStep/Proc → Dataset: step reads this dataset
+  - expands_to         # MacroInvocation → Transform[]: macro resolves to these ops
+  - defined_by         # MacroInvocation → Macro: invocation uses this definition
+  - sequenced_before   # Transform → Transform: execution ordering
+  - merged_with        # Dataset → Dataset: datasets joined in MERGE/SQL JOIN
+  - filtered_by        # Variable → Transform: variable filtered by WHERE/IF
+
+variable_states:
+  - raw
+  - validated
+  - cleaned
+  - imputed
+  - derived
+  - weighted
+  - aggregated
+  - published
+
+# State machine — descriptive, not prescriptive (SRS Section 3.3)
+# Variables may skip states; state captures what the code actually does.
+state_transitions:
+  raw:        [validated, cleaned, imputed, derived, weighted, aggregated, published]
+  validated:  [cleaned, derived, imputed]
+  cleaned:    [imputed, derived, weighted]
+  imputed:    [derived, weighted, aggregated]
+  derived:    [weighted, aggregated, published]
+  weighted:   [aggregated, published]
+  aggregated: [published]
+  published:  []
+
+transform_types:
+  - assign
+  - conditional_assign
+  - retain
+  - merge
+  - set
+  - sort
+  - aggregate
+  - frequency
+  - survey_stat
+  - sql_query
+  - transpose
+  - format_apply
+  - array_op
+  - by_group
+  - macro_expand
+  - missing_propagate
+
+data_types:
+  - numeric
+  - character
