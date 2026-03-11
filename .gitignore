@@ -124,3 +124,6 @@ dmypy.json
 # tmp folder contents (keep folder, ignore contents)
 tmp/*
 !tmp/.gitkeep
+
+# Claude Code session files
+.claude/
