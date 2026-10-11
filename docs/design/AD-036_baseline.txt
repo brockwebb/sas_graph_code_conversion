@@ -1,0 +1,6 @@
+# AD-036-R4 baseline for sas_graph_code_conversion: every gated design note on main when the prior-art gate reached
+# this repository (SQ-010 Part 0, 2026-10-11, main at e44dcbbb31810789a9e650dc8396a97cf43c0a7a; read from `git ls-files`). Grandfathered, not
+# re-litigated: the gate (the commit hook, `seldon verify`, `seldon cc register`) applies to a note NOT listed here.
+# Addenda and errata are exempt by glob and not listed. Never extended: a note added after this list needs a passing
+# `seldon prior-art verify`.
+docs/design/reference_graph_schema.md
